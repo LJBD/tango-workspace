@@ -1,0 +1,25 @@
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+REPOSITORY=http://mliszcz.github.io/tango-cs-build/repository
+
+JAVA_TOOLS=(
+  Astor-6.7.0.jar
+  ATKCore-9.1.13.jar
+  atkpanel-5.4.jar
+  AtkTuning-2.8.jar
+  ATKWidget-9.1.13.jar
+  DeviceTree-1.9.6.jar
+  Jive-6.9.jar
+  JTango-9.0.7.jar
+  log4j-1.2.15.jar
+  LogViewer-2.0.1.jar
+  tool_panels-3.2.jar
+)
+
+mkdir -p $DIR/.dist
+
+for TOOL in ${JAVA_TOOLS[@]}; do
+  echo "Installing: $TOOL"
+  curl "$REPOSITORY/jar/$TOOL" --output $DIR/.dist/$TOOL
+done

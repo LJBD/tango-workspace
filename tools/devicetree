@@ -1,0 +1,10 @@
+#!/bin/bash
+
+CLASSPATH=(
+  .dist/JTango-9.0.7.jar
+  .dist/ATKCore-9.1.13.jar
+  .dist/ATKWidget-9.1.13.jar
+  .dist/DeviceTree-1.9.6.jar
+)
+
+java -cp $(IFS=:; echo "${CLASSPATH[*]}") explorer.Main "$@"
