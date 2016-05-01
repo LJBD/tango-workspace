@@ -7,4 +7,4 @@ CLASSPATH=(
   .dist/atkpanel-5.4.jar
 )
 
-java -cp $(IFS=:; echo "${CLASSPATH[*]}") atkpanel.MainPanel"$@"
+java -cp $(IFS=:; echo "${CLASSPATH[*]}") atkpanel.MainPanel "$@"

@@ -4,6 +4,7 @@ CLASSPATH=(
   .dist/JTango-9.0.7.jar
   .dist/ATKCore-9.1.13.jar
   .dist/ATKWidget-9.1.13.jar
+  .dist/atkpanel-5.4.jar
   .dist/log4j-1.2.15.jar
   .dist/LogViewer-2.0.1.jar
 )

@@ -4,8 +4,9 @@ CLASSPATH=(
   .dist/JTango-9.0.7.jar
   .dist/ATKCore-9.1.13.jar
   .dist/ATKWidget-9.1.13.jar
-  .dist/Astor-6.7.0.jar
+  .dist/atkpanel-5.4.jar
   .dist/Jive-6.9.jar
+  .dist/Astor-6.7.0.jar
 )
 
 java -cp $(IFS=:; echo "${CLASSPATH[*]}") admin.astor.Astor "$@"
