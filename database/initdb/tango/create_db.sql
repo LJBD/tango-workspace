@@ -1,18 +1,17 @@
 
--- CREATE DATABASE tango_db;
 USE tango_db;
 
 #
 # Create all database tables
 #
 
-source /docker-entrypoint-initdb.d/include/create_db_tables.sql
+source /docker-entrypoint-initdb.d/tango/create_db_tables.sql
 
 #
 # Load the stored procedures
 #
 
-source /docker-entrypoint-initdb.d/include/stored_proc.sql
+source /docker-entrypoint-initdb.d/tango/stored_proc.sql
 
 #
 # Init the history identifiers
