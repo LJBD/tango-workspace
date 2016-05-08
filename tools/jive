@@ -1,11 +1,16 @@
 #!/bin/bash
 
-CLASSPATH=(
-  .dist/JTango-9.0.7.jar
-  .dist/ATKCore-9.1.13.jar
-  .dist/ATKWidget-9.1.13.jar
-  .dist/atkpanel-5.4.jar
-  .dist/Jive-6.9.jar
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+JARDIR=$DIR/../.config/tools
+
+DEPS=(
+  JTango-9.0.7.jar
+  ATKCore-9.1.13.jar
+  ATKWidget-9.1.13.jar
+  atkpanel-5.4.jar
+  Jive-6.9.jar
 )
+
+CLASSPATH=("${DEPS[@]/#/$JARDIR/}")
 
 java -cp $(IFS=:; echo "${CLASSPATH[*]}") jive3.MainPanel "$@"

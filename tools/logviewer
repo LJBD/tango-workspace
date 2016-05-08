@@ -1,12 +1,17 @@
 #!/bin/bash
 
-CLASSPATH=(
-  .dist/JTango-9.0.7.jar
-  .dist/ATKCore-9.1.13.jar
-  .dist/ATKWidget-9.1.13.jar
-  .dist/atkpanel-5.4.jar
-  .dist/log4j-1.2.15.jar
-  .dist/LogViewer-2.0.1.jar
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+JARDIR=$DIR/../.config/tools
+
+DEPS=(
+  JTango-9.0.7.jar
+  ATKCore-9.1.13.jar
+  ATKWidget-9.1.13.jar
+  atkpanel-5.4.jar
+  log4j-1.2.15.jar
+  LogViewer-2.0.1.jar
 )
+
+CLASSPATH=("${DEPS[@]/#/$JARDIR/}")
 
 java -cp $(IFS=:; echo "${CLASSPATH[*]}") fr.esrf.logviewer.Main "$@"

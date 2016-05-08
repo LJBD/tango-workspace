@@ -1,8 +1,13 @@
 #!/bin/bash
 
-CLASSPATH=(
-  .dist/JTango-9.0.7.jar
-  .dist/Astor-6.7.0.jar
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+JARDIR=$DIR/../.config/tools
+
+DEPS=(
+  JTango-9.0.7.jar
+  Astor-6.7.0.jar
 )
+
+CLASSPATH=("${DEPS[@]/#/$JARDIR/}")
 
 java -cp $(IFS=:; echo "${CLASSPATH[*]}") admin.astor.tango_release.JTangoVersion "$@"

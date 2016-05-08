@@ -1,5 +1,7 @@
+#!/bin/bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+TARGET=$DIR/.config/tools
 
 REPOSITORY=http://mliszcz.github.io/tango-cs-build/repository
 
@@ -17,9 +19,9 @@ JAVA_TOOLS=(
   tool_panels-3.2.jar
 )
 
-mkdir -p $DIR/.dist
+mkdir -p $TARGET
 
 for TOOL in ${JAVA_TOOLS[@]}; do
   echo "Installing: $TOOL"
-  curl "$REPOSITORY/jar/$TOOL" --output $DIR/.dist/$TOOL
+  curl "$REPOSITORY/jar/$TOOL" --output $TARGET/$TOOL
 done

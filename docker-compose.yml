@@ -1,25 +1,62 @@
 version: '2'
 services:
-  mysql_db:
+
+  mysql:
     image: mysql:5.7
-    command: 'mysqld --sql-mode=""'
+    hostname: mysql.workspace
+    command: mysqld --sql-mode=""
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: tango_db
       MYSQL_USER: tango
       MYSQL_PASSWORD: tango
     volumes:
-      - ./database/initdb:/docker-entrypoint-initdb.d:ro
-      - ./.data/mysql:/var/lib/mysql
-  tango_databaseds:
+      - ./.config/initdb:/docker-entrypoint-initdb.d:ro
+      # - ./.data/mysql:/var/lib/mysql
+
+  databaseds:
     image: mliszcz/tango-cs:xenial
+    hostname: databaseds.workspace
+    command: >-
+      /bin/sh -c 'wait-for-it.sh $${MYSQL_HOST} --timeout=30 --strict --
+      supervisord -c /etc/supervisor/init.d/supervisord.databaseds.conf'
     environment:
-      TANGO_HOST: 127.0.0.1:10000
-      MYSQL_HOST: mysql_db
+      ORB_PORT: '10000'
+      TANGO_HOST: databaseds.workspace:10000
+      MYSQL_HOST: mysql.workspace:3306
       MYSQL_DATABASE: tango_db
       MYSQL_USER: tango
       MYSQL_PASSWORD: tango
-    depends_on:
-      - mysql_db
+    volumes:
+      - ./.config/supervisord:/etc/supervisor/init.d:ro
     links:
-      - mysql_db:mysql_db
+      - mysql:mysql.workspace
+
+  tangotest:
+    image: mliszcz/tango-cs:xenial
+    hostname: tangotest.workspace
+    command: >-
+      /bin/sh -c 'wait-for-it.sh $${TANGO_HOST} --timeout=30 --strict --
+      supervisord -c /etc/supervisor/init.d/supervisord.tangotest.conf'
+    environment:
+      TANGO_HOST: databaseds.workspace:10000
+    volumes:
+      - ./.config/supervisord:/etc/supervisor/init.d:ro
+    links:
+      - databaseds:databaseds.workspace
+
+  mtango:
+    image: mliszcz/mtango:latest
+    hostname: mtango.workspace
+    command: >-
+      /bin/sh -c 'wait-for-it.sh $${TANGO_HOST} --timeout=30 --strict --
+      supervisord -c /etc/supervisor/init.d/supervisord.mtango.conf'
+    environment:
+      TANGO_HOST: databaseds.workspace:10000
+      USER_NAME: tango
+      USER_PASSWORD: tango
+      HTTP_PORT: '9091'
+    volumes:
+      - ./.config/supervisord:/etc/supervisor/init.d:ro
+    links:
+      - databaseds:databaseds.workspace

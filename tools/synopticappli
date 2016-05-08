@@ -1,10 +1,15 @@
 #!/bin/bash
 
-CLASSPATH=(
-  .dist/JTango-9.0.7.jar
-  .dist/ATKCore-9.1.13.jar
-  .dist/ATKWidget-9.1.13.jar
-  .dist/atkpanel-5.4.jar
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+JARDIR=$DIR/../.config/tools
+
+DEPS=(
+  JTango-9.0.7.jar
+  ATKCore-9.1.13.jar
+  ATKWidget-9.1.13.jar
+  atkpanel-5.4.jar
 )
+
+CLASSPATH=("${DEPS[@]/#/$JARDIR/}")
 
 java -cp $(IFS=:; echo "${CLASSPATH[*]}") fr.esrf.tangoatk.widget.util.jdraw.SimpleSynopticAppli "$@"
