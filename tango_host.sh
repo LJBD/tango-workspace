@@ -7,7 +7,7 @@ QUERY_PORT='{{ range $key, $value := .NetworkSettings.Ports }}{{ $key }}{{ end }
 QUERY_HOST='{{ .Config.Hostname }}'
 QUERY_DOMAIN='{{ .Config.Domainname }}'
 
-CONTAINER=tangocsworkspace_databaseds_1
+CONTAINER=tangoworkspace_databaseds_1
 
 IPADDR=`docker inspect -f "$QUERY_IP" $CONTAINER`
 TCPPORT=`docker inspect -f "$QUERY_PORT" $CONTAINER`
