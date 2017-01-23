@@ -46,7 +46,7 @@ services:
       - databaseds:databaseds.workspace
 
   mtango:
-    image: mliszcz/mtango:latest
+    image: mliszcz/mtango:rc3-0.1
     hostname: mtango.workspace
     command: >-
       /bin/sh -c 'wait-for-it.sh $${TANGO_HOST} --timeout=30 --strict --
