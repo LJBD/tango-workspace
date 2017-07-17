@@ -24,4 +24,4 @@ function container_details() {
 }
 
 container_details 'tangoworkspace_databaseds_1'
-container_details 'tangoworkspace_mtango_1'
+container_details 'tangoworkspace_taurus_1'
