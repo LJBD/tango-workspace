@@ -44,6 +44,11 @@ mtango.workspace       is running on: 172.18.0.5:8080
 Remember, `in docker-compose.yml`, taurus section, you have to set DISPLAY 
 to `your_ip_addres:0`
 
+You should also have started some kind of X server (i.e. 
+[Xming](https://sourceforge.net/projects/xming/) for Windows).
+For Xming, start XLaunch (not Xming) and tick option 'No Acces control'.
+
+
 Shutdown the cluster when you are done:
 
 ```

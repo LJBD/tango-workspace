@@ -39,7 +39,6 @@ services:
       /bin/sh -c 'wait-for-it.sh $${TANGO_HOST} --timeout=30 --strict --
       supervisord -c /etc/supervisor/init.d/supervisord.tangotest.conf'
     environment:
-      ORB_PORT: 10000
       TANGO_HOST: databaseds.workspace:10000
     volumes:
       - ./.config/supervisord:/etc/supervisor/init.d:ro
@@ -53,7 +52,6 @@ services:
       TANGO_HOST: databaseds.workspace:10000
       USER_NAME: tango
       USER_PASSWORD: tango
-      HTTP_PORT: '9091'
       DISPLAY: 192.168.120.205:0
     volumes:
       - ./.config/supervisord:/etc/supervisor/init.d:ro
