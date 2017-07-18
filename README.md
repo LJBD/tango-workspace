@@ -41,6 +41,9 @@ databaseds.workspace   is running on: 172.18.0.3:10000
 mtango.workspace       is running on: 172.18.0.5:8080
 ```
 
+Remember, `in docker-compose.yml`, taurus section, you have to set DISPLAY 
+to `your_ip_addres:0`
+
 Shutdown the cluster when you are done:
 
 ```
@@ -55,7 +58,7 @@ If you want the database persistent, just uncomment the following line in
 ```yaml
 - ./.data/mysql:/var/lib/mysql
 ```
- ### Problems with maria_db ora databaseds
+ ### Problems with maria_db or databaseds
  If you encounter problems with starting one of those containers, change in 
  `docker-compose.yml` those relative directories
  ```
