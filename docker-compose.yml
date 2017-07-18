@@ -11,7 +11,7 @@ services:
       MYSQL_USER: tango
       MYSQL_PASSWORD: tango
     volumes:
-      - C:/Users/docker_repo/tango-workspace/.config/initdb:/docker-entrypoint-initdb.d:ro
+      - ./.config/initdb:/docker-entrypoint-initdb.d:ro
       #- ./.data/mysql:/var/lib/mysql
 
   databaseds:
