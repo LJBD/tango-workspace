@@ -46,9 +46,10 @@ services:
       - databaseds:databaseds.workspace
   
   sardana:
-    image: ljbd/solaris-tango-centos:ds-0.5
+    image: ljbd/solaris-tango-centos:ds-0.6
     hostname: sardana.workspace
-    command: Sardana test --log-level=debug
+    command: /bin/bash -c "python -c 'import time; time.sleep(10)';
+                           Sardana test --log-level=debug"
     environment:
       TANGO_HOST: databaseds.workspace:10000
     restart: always
