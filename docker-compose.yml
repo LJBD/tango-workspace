@@ -12,7 +12,7 @@ services:
       MYSQL_PASSWORD: tango
     volumes:
       - ./.config/initdb:/docker-entrypoint-initdb.d:ro
-      #- ./.data/mysql:/var/lib/mysql
+      - ./.data/mysql:/var/lib/mysql
 
   databaseds:
     image: tangocs/tango-cs:9
@@ -44,16 +44,26 @@ services:
       - ./.config/supervisord:/etc/supervisor/init.d:ro
     links:
       - databaseds:databaseds.workspace
-
-  taurus:
-    image: synchrotronsolaris/centos-taurus:latest
-    hostname: taurus.workspace
+  
+  sardana:
+    image: ljbd/solaris-tango-centos:ds-0.5
+    hostname: sardana.workspace
+    command: Sardana test --log-level=debug
     environment:
       TANGO_HOST: databaseds.workspace:10000
-      USER_NAME: tango
-      USER_PASSWORD: tango
-      DISPLAY: 192.168.120.205:0
-    volumes:
-      - ./.config/supervisord:/etc/supervisor/init.d:ro
+    restart: always
     links:
       - databaseds:databaseds.workspace
+
+  # taurus:
+  #   image: synchrotronsolaris/centos-taurus:latest
+  #   hostname: taurus.workspace
+  #   environment:
+  #     TANGO_HOST: databaseds.workspace:10000
+  #     USER_NAME: tango
+  #     USER_PASSWORD: tango
+  #     DISPLAY: 192.168.120.205:0
+  #   volumes:
+  #     - ./.config/supervisord:/etc/supervisor/init.d:ro
+  #   links:
+  #     - databaseds:databaseds.workspace
