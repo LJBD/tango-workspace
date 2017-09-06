@@ -12,7 +12,7 @@ services:
       MYSQL_PASSWORD: tango
     volumes:
       - ./.config/initdb:/docker-entrypoint-initdb.d:ro
-      #- ./.data/mysql:/var/lib/mysql
+       - ./.data/mysql:/var/lib/mysql
 
   databaseds:
     image: tangocs/tango-cs:9
@@ -32,28 +32,31 @@ services:
     links:
       - mariadb:mariadb.workspace
 
-  tangotest:
-    image: synchrotronsolaris/centos-tango-dev:latest
-    hostname: tangotest.workspace
-    command: >-
-      /bin/sh -c 'wait-for-it.sh $${TANGO_HOST} --timeout=30 --strict --
-      supervisord -c /etc/supervisor/init.d/supervisord.tangotest.conf'
+  tango-jmodelica:
+    image: ljbd/centos-tango-jmodelica:0.6
+    hostname: tangojmodelica.workspace
+    command: supervisord -c /etc/supervisor/init.d/supervisord.tangojmodelica.conf
+    restart: always
     environment:
       TANGO_HOST: databaseds.workspace:10000
+      DISPLAY: 192.168.0.19:0
+      MODELICAPATH: /work/JModelica.org/ThirdParty/MSL
+      PYTHONPATH: /opt/masthe-tango-ds-tanks-regulation:/work/JModelica.org/Python
     volumes:
       - ./.config/supervisord:/etc/supervisor/init.d:ro
+      - ./../masthe-tango-ds-tanks-regulation:/opt/masthe-tango-ds-tanks-regulation
     links:
       - databaseds:databaseds.workspace
 
-  taurus:
-    image: synchrotronsolaris/centos-taurus:latest
-    hostname: taurus.workspace
-    environment:
-      TANGO_HOST: databaseds.workspace:10000
-      USER_NAME: tango
-      USER_PASSWORD: tango
-      DISPLAY: 192.168.120.205:0
-    volumes:
-      - ./.config/supervisord:/etc/supervisor/init.d:ro
-    links:
-      - databaseds:databaseds.workspace
+#  taurus:
+#    image: synchrotronsolaris/centos-taurus:latest
+#    hostname: taurus.workspace
+#    environment:
+#      TANGO_HOST: databaseds.workspace:10000
+#      USER_NAME: tango
+#      USER_PASSWORD: tango
+#      DISPLAY: 192.168.120.205:0
+#    volumes:
+#      - ./.config/supervisord:/etc/supervisor/init.d:ro
+#    links:
+#      - databaseds:databaseds.workspace
