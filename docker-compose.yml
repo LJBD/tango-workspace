@@ -39,7 +39,7 @@ services:
     restart: always
     environment:
       TANGO_HOST: databaseds.workspace:10000
-      DISPLAY: 192.168.0.19:0
+      DISPLAY: 10.0.75.1:0
       MODELICAPATH: /work/JModelica.org/ThirdParty/MSL
       PYTHONPATH: /opt/masthe-tango-ds-tanks-regulation:/work/JModelica.org/Python
     volumes:
